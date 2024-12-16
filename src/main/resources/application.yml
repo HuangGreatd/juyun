@@ -3,6 +3,12 @@ server:
   servlet:
     context-path: /api
 spring:
+  # 开放更大的文件上传体积
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  profiles:
+    active: local
   application:
     name: juyun-backend
   # 数据库配置
@@ -36,3 +42,5 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.juzipi.juyunbackend.controller
+
+
