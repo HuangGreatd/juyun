@@ -2,6 +2,7 @@ package com.juzipi.juyunbackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.juzipi.juyunbackend.domain.dto.picture.PictureEditRequest;
 import com.juzipi.juyunbackend.domain.dto.picture.PictureQueryRequest;
 import com.juzipi.juyunbackend.domain.dto.picture.PictureReviewRequest;
 import com.juzipi.juyunbackend.domain.dto.picture.PictureUploadRequest;
@@ -51,6 +52,12 @@ public interface PictureService extends IService<Picture> {
 
     void fillReviewParams(Picture picture, User loginUser);
 
+    void deletePicture(long pictureId, User loginUser);
+
     @Async
     void clearPictureFile(Picture oldPicture);
+
+    void checkPictureAuth(User loginUser, Picture picture);
+
+    void editPicture(PictureEditRequest pictureEditRequest, User loginUser);
 }
