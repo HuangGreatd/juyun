@@ -34,3 +34,4 @@ build/
 !/.idea/
 /src/main/resources/application-local.yml
 /src/main/resources/application-test.properties
+/data/natapp/config.ini

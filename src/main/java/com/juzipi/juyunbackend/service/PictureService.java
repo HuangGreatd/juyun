@@ -9,6 +9,7 @@ import com.juzipi.juyunbackend.domain.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.juzipi.juyunbackend.domain.entity.User;
 import com.juzipi.juyunbackend.domain.vo.PictureVO;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,4 +50,7 @@ public interface PictureService extends IService<Picture> {
     void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
 
     void fillReviewParams(Picture picture, User loginUser);
+
+    @Async
+    void clearPictureFile(Picture oldPicture);
 }
