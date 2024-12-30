@@ -21,6 +21,7 @@
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
         <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
         <result property="thumbnailUrl" column="thumbnailUrl" jdbcType="VARCHAR"/>
+        <result property="picColor" column="picColor" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -35,6 +36,7 @@
         picWidth,
         picHeight,
         picScale,
+        picColor,
         picFormat,
         userId,
         createTime,

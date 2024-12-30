@@ -2,18 +2,17 @@ package com.juzipi.juyunbackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.juzipi.juyunbackend.domain.dto.picture.PictureEditRequest;
-import com.juzipi.juyunbackend.domain.dto.picture.PictureQueryRequest;
-import com.juzipi.juyunbackend.domain.dto.picture.PictureReviewRequest;
-import com.juzipi.juyunbackend.domain.dto.picture.PictureUploadRequest;
+import com.juzipi.juyunbackend.domain.dto.picture.*;
 import com.juzipi.juyunbackend.domain.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.juzipi.juyunbackend.domain.entity.User;
 import com.juzipi.juyunbackend.domain.vo.PictureVO;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author 73782
@@ -60,4 +59,9 @@ public interface PictureService extends IService<Picture> {
     void checkPictureAuth(User loginUser, Picture picture);
 
     void editPicture(PictureEditRequest pictureEditRequest, User loginUser);
+
+    List<PictureVO> searchPictureByColor(Long spaceId, String picColor, User loginUser);
+
+    @Transactional(rollbackFor = Exception.class)
+    void editPictureByBatch(PictureEditByBatchRequest pictureEditByBatchRequest, User loginUser);
 }
