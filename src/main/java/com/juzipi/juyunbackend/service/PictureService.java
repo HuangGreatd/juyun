@@ -2,6 +2,7 @@ package com.juzipi.juyunbackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.juzipi.juyunbackend.api.aliyunai.model.CreateOutPaintingTaskResponse;
 import com.juzipi.juyunbackend.domain.dto.picture.*;
 import com.juzipi.juyunbackend.domain.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -64,4 +65,52 @@ public interface PictureService extends IService<Picture> {
 
     @Transactional(rollbackFor = Exception.class)
     void editPictureByBatch(PictureEditByBatchRequest pictureEditByBatchRequest, User loginUser);
+
+    //    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public void batchEditPictureMetadata(PictureBatchEditRequest request, Long spaceId, Long loginUserId) {
+//        // 参数校验
+//        validateBatchEditRequest(request, spaceId, loginUserId);
+//
+//        // 查询空间下的图片
+//        List<Picture> pictureList = this.lambdaQuery()
+//                .eq(Picture::getSpaceId, spaceId)
+//                .in(Picture::getId, request.getPictureIds())
+//                .list();
+//
+//        if (pictureList.isEmpty()) {
+//            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "指定的图片不存在或不属于该空间");
+//        }
+//
+//        // 分批处理避免长事务
+//        int batchSize = 100;
+//        List<CompletableFuture<Void>> futures = new ArrayList<>();
+//        for (int i = 0; i < pictureList.size(); i += batchSize) {
+//            List<Picture> batch = pictureList.subList(i, Math.min(i + batchSize, pictureList.size()));
+//
+//            // 异步处理每批数据
+//            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+//                batch.forEach(picture -> {
+//                    // 编辑分类和标签
+//                    if (request.getCategory() != null) {
+//                        picture.setCategory(request.getCategory());
+//                    }
+//                    if (request.getTags() != null) {
+//                        picture.setTags(String.join(",", request.getTags()));
+//                    }
+//                });
+//                boolean result = this.updateBatchById(batch);
+//                if (!result) {
+//                    throw new BusinessException(ErrorCode.OPERATION_ERROR, "批量更新图片失败");
+//                }
+//            }, customExecutor);
+//
+//            futures.add(future);
+//        }
+//
+//        // 等待所有任务完成
+//        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+//    }
+
+    CreateOutPaintingTaskResponse createPictureOutPaintingTask(CreatePictureOutPaintingTaskRequest createPictureOutPaintingTaskRequest, User loginUser);
 }
