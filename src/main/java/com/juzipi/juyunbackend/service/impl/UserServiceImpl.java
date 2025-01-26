@@ -14,6 +14,7 @@ import com.juzipi.juyunbackend.domain.vo.LoginUserVO;
 import com.juzipi.juyunbackend.domain.vo.UserVO;
 import com.juzipi.juyunbackend.exception.BusinessException;
 import com.juzipi.juyunbackend.exception.ErrorCode;
+import com.juzipi.juyunbackend.manage.auth.StpKit;
 import com.juzipi.juyunbackend.service.UserService;
 import com.juzipi.juyunbackend.mapper.UserMapper;
 import com.juzipi.juyunbackend.utils.SqlUtils;
@@ -111,6 +112,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
+        // 4. 记录用户登录态到 Sa-token，便于空间鉴权时使用，注意保证该用户信息与 SpringSession 中的信息过期时间一致
+        StpKit.SPACE.login(user.getId());
+        StpKit.SPACE.getSession().set(USER_LOGIN_STATE, user);
+
         return this.getLoginUserVO(user);
     }
 
